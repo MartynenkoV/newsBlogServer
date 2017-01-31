@@ -1,14 +1,6 @@
 var mongoose = require("mongoose");
 
 
- // data = {
-  // 	title:"Title1",
-  // 	content:"aaaaaaaa",
-  // 	date: "dd/MM/yyyy",
-  // 	comments:[1,2,3,4,5,6],
-  // 	image:"../assets/hierarchicalstructureofthei.jpg"
-  // }
-
 var newsSchema = mongoose.Schema({
     title:{
         type:String,
@@ -26,11 +18,27 @@ var newsSchema = mongoose.Schema({
     ImageUrl:{
         type:String,
         require:true
-    }
+    },
     //Comments
+     comments : [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
 
 });
 
+var commentSchema = mongoose.Schema({
+
+
+  _creator : { type: Number, ref: 'News' },
+  content    : String
+//User
+
+
+});
+
+
+
+
+
+var Comment = mongoose.model("Comment",commentSchema);
 var News = mongoose.model("News",newsSchema);
 
 module.exports = News;

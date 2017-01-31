@@ -12,6 +12,7 @@ var users = require('./routes/users');
 var app = express();
 
 //mongoose connect
+mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://admin:admin@ds155428.mlab.com:55428/news");
 //mongodb://<dbuser>:<dbpassword>@ds155428.mlab.com:55428/news
 
