@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var News = require('../models/news')
+var DB = require('../models/news')
 
 
 //CORS for develop
@@ -15,10 +15,13 @@ router.use(function (req, res, next) {
 
 
 var getPages = function (req, res, next) {
-    var perPage = 2;
+    var perPage = 4;
     //should add isNaN assert 
+    // if(isNaN(req.params.page)){
+    //     next();
+    // }
     var page = req.params.page > 0 ? req.params.page : 0;
-    News.find()
+    DB.News.find()
         .sort({
             date: "descending"
         })
@@ -28,7 +31,7 @@ var getPages = function (req, res, next) {
             if (err) {
                 return next(err);
             }
-            News.count({}, function (err, count) {
+            DB.News.count({}, function (err, count) {
                 console.log(count);
                 res.send({
                     count:count,
@@ -36,11 +39,15 @@ var getPages = function (req, res, next) {
             });
 
         });
+
+       // console.log("Hello /");
 }
 
 router.get("/",getPages);
 
 router.get("/:page", getPages);
+
+
 
 router.post("/", function (req, res, next) {
     var title = req.body.title;
@@ -48,13 +55,28 @@ router.post("/", function (req, res, next) {
     var ImageUrl = req.body.ImageUrl;
 
     // err handler
-    var test = new News({
+    var test = new DB.News({
         title: title,
         content: content,
         ImageUrl: ImageUrl,
         comments:[]
     });
     test.save(next);
+});
+
+router.post("/genseeds", function (req, res, next) {
+
+    for(var i = 30; i<60;i++){
+        var news = new DB.News({
+            title : "Title" + i,
+            description : "DESCRIPTION PLACE",
+            content : new DB.Content({content:"HTML"}),
+            ImageUrl: "../assets/"+Math.floor(Math.random()*6)+".jpg"
+        });
+        news.save();
+    }
+    next();
+
 
 });
 

@@ -4,11 +4,16 @@ var mongoose = require("mongoose");
 var newsSchema = mongoose.Schema({
     title:{
         type:String,
-        require:true,
-        unique:true
+        require:true
     },
-    content:{
+    description:{
         type:String,
+        require:true
+    },
+    //Iner Html
+    content:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Content' ,
         require:true
     },
     date:{
@@ -34,11 +39,20 @@ var commentSchema = mongoose.Schema({
 
 });
 
+var contentSchema = mongoose.Schema({
+  _creator : { type: Number, ref: 'News' },
+  content    : String
+});
 
 
 
-
+var Content = mongoose.model("Content",commentSchema);
 var Comment = mongoose.model("Comment",commentSchema);
 var News = mongoose.model("News",newsSchema);
 
-module.exports = News;
+module.exports = {
+    News:News,
+    Comment:Comment,
+    Content:Content
+}
+
