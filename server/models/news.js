@@ -14,7 +14,7 @@ var newsSchema = mongoose.Schema({
     content:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Content' ,
-        require:true
+       // require:true
     },
     date:{
         type: Date,
@@ -40,7 +40,7 @@ var commentSchema = mongoose.Schema({
 });
 
 var contentSchema = mongoose.Schema({
-  _creator : { type: Number, ref: 'News' },
+  //_creator : { type: Number, ref: 'News' },
   content    : String
 });
 

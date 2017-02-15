@@ -66,11 +66,17 @@ router.post("/", function (req, res, next) {
 
 router.post("/genseeds", function (req, res, next) {
 
-    for(var i = 30; i<60;i++){
+    for(var i = 0; i<60;i++){
+
+        var content = new DB.Content({
+            content:"HTML <b>span</b>"
+        });
+        content.save();
+
         var news = new DB.News({
             title : "Title" + i,
             description : "DESCRIPTION PLACE",
-            content : new DB.Content({content:"HTML"}),
+            content : content,
             ImageUrl: "../assets/"+Math.floor(Math.random()*6)+".jpg"
         });
         news.save();
