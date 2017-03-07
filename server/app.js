@@ -6,11 +6,15 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require("mongoose");
 
+var session = require("express-session");
+//var flash = require("connect-flash");
+var passport = require("passport");
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 var news = require('./routes/news');
 
-var app = express();
+var app = express(); 
 
 //mongoose connect
 mongoose.Promise = global.Promise;
@@ -28,6 +32,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: "TKRv0IJs=HYqrvagQ#&!F!%V]Ww/4KiVs$s,<<MX",
+    resave: true,
+    saveUninitialized: true
+}));
+//app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', index);
 app.use('/users', users);

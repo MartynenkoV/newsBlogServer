@@ -21,7 +21,7 @@ var userSchema = mongoose.Schema({
     bio: String,
 });
 
-var noop = function () {};
+var noop = function () {}; 
 
 
 userSchema.pre("save", function (done) {
